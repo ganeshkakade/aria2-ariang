@@ -1,0 +1,13 @@
+# default caddy configuration
+
+:8080
+reverse_proxy /jsonrpc 127.0.0.1:6800
+reverse_proxy /rpc 127.0.0.1:6800
+
+root * /ariang
+file_server
+encode gzip
+
+log {
+  level warn
+}
