@@ -46,7 +46,7 @@ Please visit [http://ariang.mayswind.net/latest](http://ariang.mayswind.net/late
 docker run -d --name aria2-ariang -p 6800:6800 -p 8080:8080 ganeshkakade/aria2-ariang
 ```
 
-To run as a other users and to map custom volume locations use:
+To run as a different user and to map custom volume locations use:
 
 ```bash
 docker run -d \
