@@ -1,7 +1,7 @@
 #!/bin/sh
 
 config_path=/aria2/config
-default_config_path=/aria2/default-config
+default_config_path=/aria2/default_config
 downloads_path=/aria2/downloads
 
 if [ ! -f $config_path/aria2.conf ]; then

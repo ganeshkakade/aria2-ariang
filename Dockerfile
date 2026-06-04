@@ -6,7 +6,7 @@ RUN apk add --no-cache aria2 caddy su-exec \
   && rm -rf ariang.zip
 
 COPY Caddyfile /etc/caddy/Caddyfile
-COPY default-config/aria2.conf /aria2/default-config/aria2.conf
+COPY default_config/aria2.conf /aria2/default_config/aria2.conf
 COPY entrypoint.sh /entrypoint.sh
 
 VOLUME /aria2/config
