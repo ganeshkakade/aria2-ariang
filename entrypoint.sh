@@ -1,16 +1,16 @@
 #!/bin/sh
 
-config_path=/aria2/config
-default_config_path=/aria2/default_config
-downloads_path=/aria2/downloads
+CONFIG_PATH=/aria2/config
+DEFAULT_CONFIG_PATH=/aria2/default_config
+DOWNLOADS_PATH=/aria2/downloads
 
-if [ ! -f $config_path/aria2.conf ]; then
-  cp $default_config_path/aria2.conf $config_path/aria2.conf
+if [ ! -f "$CONFIG_PATH/aria2.conf" ]; then
+  cp "$DEFAULT_CONFIG_PATH/aria2.conf" "$CONFIG_PATH/aria2.conf"
 fi
 
 if [ -n "$RPC_SECRET" ]; then
-  sed -i '/^rpc-secret=/d' $config_path/aria2.conf
-  printf 'rpc-secret=%s\n' "${RPC_SECRET}" >> $config_path/aria2.conf
+  sed -i '/^rpc-secret=/d' "$CONFIG_PATH/aria2.conf"
+  printf 'rpc-secret=%s\n' "${RPC_SECRET}" >> "$CONFIG_PATH/aria2.conf"
 fi
 
 if [ -n "$BASIC_AUTH_USERNAME" ] && [ -n "$BASIC_AUTH_PASSWORD" ]; then
@@ -21,18 +21,18 @@ if [ -n "$BASIC_AUTH_USERNAME" ] && [ -n "$BASIC_AUTH_PASSWORD" ]; then
   " >> /etc/caddy/Caddyfile
 fi
 
-touch $config_path/aria2.session
+touch "$CONFIG_PATH/aria2.session"
 
 userid="$(id -u)"
 groupid="$(id -g)"
 
-if [[ -n "$PUID" && -n "$PGID" ]]; then
+if [ -n "$PUID" ] && [ -n "$PGID" ]; then
   userid=$PUID
   groupid=$PGID
 fi
 
-chown -R "$userid":"$groupid" $config_path
-chown -R "$userid":"$groupid" $downloads_path
+chown -R "$userid:$groupid" "$CONFIG_PATH"
+chown -R "$userid:$groupid" "$DOWNLOADS_PATH"
 
 caddy start --config /etc/caddy/Caddyfile
-su-exec "$userid":"$groupid" aria2c --conf-path=/aria2/config/aria2.conf
+exec su-exec "$userid:$groupid" aria2c --conf-path="$CONFIG_PATH/aria2.conf"
