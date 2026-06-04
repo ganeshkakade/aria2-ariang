@@ -20,3 +20,4 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/aria2-ariang:latest
+          platforms: linux/amd64, linux/arm64
